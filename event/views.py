@@ -7,10 +7,13 @@ from . import forms, models
 # Create your views here.
 def home_view(request):
     query = request.GET.get('search')
-    print(request.user.is_superuser)
-   
+    category = request.GET.get('category')
+    
     if query:
         events =models.Event.objects.filter(name__icontains=query) | models.Event.objects.filter(date__icontains=query) | models.Event.objects.filter(location__icontains=query) 
+        events = events.distinct()
+    elif category:
+        events =models.Event.objects.filter(category__name__icontains=category)  
         events = events.distinct()
     else:
         events = models.Event.objects.all()
@@ -34,7 +37,8 @@ def home_view(request):
                 x.booked = False
 
     context = {
-        'events': events
+        'events': events,
+        
     }
     template_name = "event/home.html"
     return render(request, template_name, context)

@@ -8,6 +8,13 @@ class CategoryForm(forms.ModelForm):
         fields = ['name']
 
 
+class FilterCategoryForm(forms.Form):
+    username = forms.ModelChoiceField(
+        queryset=models.Category.objects.all(),
+        widget=forms.TextInput(attrs={"placeholder": "Category",'class':'border rounded border-solid border-slate-300'})
+        )
+
+
 class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
