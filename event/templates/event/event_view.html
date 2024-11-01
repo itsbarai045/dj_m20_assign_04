@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<p class="text-3xl text-center">Event Details Page</p>
+
+
+<div class="flex justify-center w-full ">
+    <div class=" flex justify-center w-1/2">
+        <div class="flex flex-col w-full gap-2">
+            <div class="text-right ">
+
+                {% if request.user.is_superuser %}
+                <a href="{% url 'update_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Update
+                </a>
+                <a href="{% url 'delete_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Delete
+                </a>
+                {% if booker %}
+
+                <a href="{% url 'home' %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Back
+                </a>
+                <a href=""
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Booked
+                </a>
+                {% else %}
+                <a href="{% url 'book_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Book Event
+                </a>
+                {% endif %}
+                {% elif event.owner == user %}
+                <a href="{% url 'update_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Update
+                </a>
+                <a href="{% url 'delete_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Delete
+                </a>
+                {% elif booked %}
+
+                <a href="{% url 'home' %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Back
+                </a>
+                <a href=""
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Booked
+                </a>
+                {% else %}
+                <a href="{% url 'book_event' event.id %}"
+                    class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-20 ">
+                    Book Event
+                </a>
+
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col bg-cyan-50 p-4 ">
+                <div class="flex gap-2 text-2xl">
+                    <div>Name: </div>
+                    <div>{{event.name}}</div>
+                </div>
+                <div class="flex gap-2">
+                    <div>Date: </div>
+                    <div>{{event.date |date:"D d M Y"}}</div>
+                </div>
+                <div class="flex gap-2">
+                    <div>Duration: </div>
+                    <div>{{event.duration }} hours </div>
+                </div>
+                <div class="flex gap-2">
+                    <div>Venu: </div>
+                    <div>{{event.location }} </div>
+                </div>
+                <div class="flex gap-2">
+                    <div>Category: </div>
+                    <div>{{event.category }} </div>
+                </div>
+                <div class="flex gap-2">
+                    <div>Description: </div>
+                    <div>{{event.desc }} </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="flex flex-col bg-cyan-50 p-4 ">
+                <div class="text-xl text-cyan-500">
+                    Participants:
+                </div>
+
+                <div class="flex gap-2">
+                    <div>Booking Status: </div>
+                    <div>{{event.status }} </div>
+                </div>
+
+                {% for x in participants %}
+                <div class="flex gap-2">
+                    <div>{{ x.member.username }} </div>
+                    <div>{{ x.member.first_name }} {{ x.member.last_name }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="text-3xl text-center class my-6">{{request.user.username}}, Update your Profile !</div>
+<div class="flex justify-center w-full ">
+    <div class=" flex justify-center w-1/3">
+        <form method="post" class="grid gap-3 w-full p-4 bg-blue-100">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit"
+                class="px-3 py-1 bg-gray-400 text-gray-800 border rounded hover:text-gray-100 hover:bg-blue-400 w-32 ">Save
+                Changes</button>
+
+                <p class="text-center "><a href="{% url 'home' %}" class="text-blue-400 hover:text-blue-600">Back to Home</a></p>
+        </form>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}
